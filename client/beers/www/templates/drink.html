@@ -1,0 +1,32 @@
+<ion-view title="Drink">
+  <ion-content class="has-header">
+    <div class="list card">
+      <div class="item item-divider">
+        {{ data.name }}
+      </div>
+      <a href="#/app/browse/brewery/{{ data.brewery}}" class="item item-icon-left">
+        <i class="icon ion-home"></i>
+        {{ data.brewery }}
+      </a>
+      <a href="#/app/browse/type/{{ data.type }}" class="item item-icon-left">
+        <i class="icon ion-beer"></i>
+        {{data.type }} at {{ data.abv }}%
+      </a>
+      <div class="item item-icon-left item-text-wrap">
+        <i class="icon ion-document-text"></i>
+        {{ data.notes }}
+      </div>
+      <div class="item" id="rating">
+        <i class="icon ion-beer" score="1" ng-class="highLight(1)" ng-click="rate(1)"></i>
+        <i class="icon ion-beer" score="2" ng-class="highLight(2)" ng-click="rate(2)"></i>
+        <i class="icon ion-beer" score="3" ng-class="highLight(3)" ng-click="rate(3)"></i>
+        <i class="icon ion-beer" score="4" ng-class="highLight(4)" ng-click="rate(4)"></i>
+        <i class="icon ion-beer" score="5" ng-class="highLight(5)" ng-click="rate(5)"></i>
+      </div>
+
+      <div class="item item-divider">
+        &nbsp;
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,49 @@
+/* Empty. Add your own CSS if you like */
+#browse .item-icon-right .icon {
+  position: static;
+  float: right;
+}
+
+#browse .item-icon-right .item-content {
+  padding-right: 16px;
+}
+
+#browse .item-icon-right .item-content .drinkName {
+  float: left;
+}
+
+#browse .item-icon-right .item-content .drinkBrewery {
+  float: left;
+  clear: left;
+  font-size: 12pt;
+  color: #808080;
+}
+
+.not-scored
+{
+  color: #dedede;
+}
+
+.scored
+{
+  color: #C2A01B;
+}
+
+.voted
+{
+  color: #00aaff;
+}
+
+#rating .icon {
+  font-size: 32px;
+}
+
+.browse-score {
+  float: right;
+  clear: both;
+}
+
+.browse-score .icon {
+  font-size: 20px;
+  width: 24px;
+}

@@ -1,0 +1,31 @@
+<ion-view title="{{ header }}" id="browse">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="getData()">
+    </ion-refresher>
+    <div class="item item-input-inset">
+      <label class="item-input-wrapper">
+        <input type="text" placeholder="filter" ng-model="filter.name">
+      </label>
+    </div>
+    <ion-list>
+      <ion-item class="item-icon-right" ng-repeat="d in data | filter:filter:strict" href="#/app/drink/{{ d._id }}">
+        <div class="drinkName">{{ d.no }} : {{ d.name }} ({{ d.abv }}%)</div>
+
+        <div class="browse-score">
+          <i class="icon ion-beer" ng-class="(d.avg >= 5)?'scored':'not-scored'"></i>
+          <i class="icon ion-beer" ng-class="(d.avg >= 4)?'scored':'not-scored'"></i>
+          <i class="icon ion-beer" ng-class="(d.avg >= 3)?'scored':'not-scored'"></i>
+          <i class="icon ion-beer" ng-class="(d.avg >= 2)?'scored':'not-scored'"></i>
+          <i class="icon ion-beer" ng-class="(d.avg >= 1)?'scored':'not-scored'"></i>
+        </div>
+
+        <div class="drinkBrewery">{{ d.breweryName }}</div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

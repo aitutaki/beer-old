@@ -92,7 +92,7 @@ router.route('/drinks/top')
 	.get(function(req, res) {
 		Drink.aggregate([
 				// First sort all the docs by name
-				{$sort: {avg: -1}},
+				{$sort: {avg: -1, no: 1}},
 				// Take the first 100 of those
 				{$limit: 10} //,
 				// Of those, take only ones where marks > 35

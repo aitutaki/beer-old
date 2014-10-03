@@ -76,6 +76,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
+    .state('app.mine', {
+      url: "/browse/mine/:mine",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/browse.html",
+          controller: 'BrowseCtrl'
+        }
+      }
+    })
     .state('app.brewery', {
       url: "/browse/brewery/:breweryId",
       views: {

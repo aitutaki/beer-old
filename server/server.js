@@ -81,6 +81,24 @@ router.route('/drinks/top')
 		});
 	});
 
+router.route('/drinks/my')
+	.post(function(req, res) {
+		var mine = [];
+		Vote.find({ user: req.body.user }, function(err, data) {
+			if (data)
+			{
+				for (var i=0; i < data.length; i++)
+				{
+					mine.push(data[i].drinkId);
+				}
+				Drink.find({ drinkId: { $in: mine }}, function(err, data) {
+					res.json(data);
+				});
+			}
+		});
+	});
+
+
 router.route('/drinks')
 	.post(function(req, res) {
 

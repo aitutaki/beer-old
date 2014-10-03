@@ -77,6 +77,10 @@ angular.module('starter.controllers', [])
   {
     $scope.header = "Top Rated";
   }
+  else if (!!$stateParams.mine)
+  {
+    $scope.header = "My Votes";
+  }
 
   $scope.getData = function() {
     if ($scope.query)
@@ -106,16 +110,15 @@ angular.module('starter.controllers', [])
           $scope.$broadcast('scroll.refreshComplete');
         });
     }
-    /*
     else if (!!$stateParams.allType) {
       var q = {};
       if ($stateParams.allType == "beer")
       {
-        q = { type: { $ne: "cider" } };
+        q = { "type": { "$ne": "cider" } };
       }
       else
       {
-        q = { type: "cider" };
+        q = { "type": "cider" };
       }
       $http.post($rootScope.apiURL + "drinks/query", q)
         .success(function(data) {
@@ -129,7 +132,19 @@ angular.module('starter.controllers', [])
           $scope.$broadcast('scroll.refreshComplete');
         });
     }
-    */
+    else if (!!$stateParams.mine) {
+      $http.post($rootScope.apiURL + "drinks/my", { user: $rootScope.uuid })
+        .success(function(data) {
+          for (var i=0; i < data.length; i++)
+          {
+            data[i].name = data[i].no + " : " + data[i].name;
+          }
+          if (data) $scope.data = data;
+        })
+        .finally(function() {
+          $scope.$broadcast('scroll.refreshComplete');
+        });
+    }
     else
     {
       $http.get($rootScope.apiURL + "drinks")

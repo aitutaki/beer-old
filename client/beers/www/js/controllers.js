@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($rootScope, $scope, $ionicModal, $timeout, $http, $ionicPlatform) {
-  $rootScope.apiURL =  "http://178.62.27.239:8080/api/"; // ;"http://localhost:8080/api/"; //
+  $rootScope.apiURL = "http://178.62.27.239:8080/api/"; //"http://localhost:8080/api/"; //
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -34,6 +34,12 @@ angular.module('starter.controllers', [])
 
   $rootScope.myVotes = JSON.parse(window.localStorage.getItem("myvotes") || "{}");
 
+  $rootScope.yourScore = function (drinkId) {
+    var out = 0;
+    out = $rootScope.myVotes[drinkId] || 0;
+    return out;
+  }
+
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
     $scope.modal.hide();
@@ -56,7 +62,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('BrowseCtrl', function($rootScope, $scope, $http, $stateParams) {
+.controller('BrowseCtrl', function($rootScope, $scope, $http, $stateParams, $ionicLoading) {
   $scope.data = [];
   $scope.filterText = "";
   $scope.filter = { name: "" };
@@ -82,31 +88,42 @@ angular.module('starter.controllers', [])
     $scope.header = "My Votes";
   }
 
+  $scope.viewDrink = function(drinkId) {
+    window.location.hash = "#/app/drink/" + drinkId;
+  };
+
   $scope.getData = function() {
+    function _proc (data)
+    {
+      for (var i=0; i < data.length; i++)
+      {
+        data[i].name = data[i].no + " : " + data[i].name;
+        data[i].my = $rootScope.yourScore(data[i]._id);
+      }
+    }
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
     if ($scope.query)
     {
       $http.post($rootScope.apiURL + "drinks/query", $scope.query)
         .success(function(data) {
-          for (var i=0; i < data.length; i++)
-          {
-            data[i].name = data[i].no + " : " + data[i].name;
-          }
+          _proc(data);
           if (data) $scope.data = data;
         })
         .finally(function() {
+          $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         });
     }
     else if (!!$stateParams.top) {
       $http.get($rootScope.apiURL + "drinks/top")
         .success(function(data) {
-          for (var i=0; i < data.length; i++)
-          {
-            data[i].name = data[i].no + " : " + data[i].name;
-          }
+          _proc(data);
           if (data) $scope.data = data;
         })
         .finally(function() {
+          $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         });
     }
@@ -122,26 +139,22 @@ angular.module('starter.controllers', [])
       }
       $http.post($rootScope.apiURL + "drinks/query", q)
         .success(function(data) {
-          for (var i=0; i < data.length; i++)
-          {
-            data[i].name = data[i].no + " : " + data[i].name;
-          }
+          _proc(data);
           if (data) $scope.data = data;
         })
         .finally(function() {
+          $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         });
     }
     else if (!!$stateParams.mine) {
       $http.post($rootScope.apiURL + "drinks/my", { user: $rootScope.uuid })
         .success(function(data) {
-          for (var i=0; i < data.length; i++)
-          {
-            data[i].name = data[i].no + " : " + data[i].name;
-          }
+          _proc(data);
           if (data) $scope.data = data;
         })
         .finally(function() {
+          $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         });
     }
@@ -149,13 +162,11 @@ angular.module('starter.controllers', [])
     {
       $http.get($rootScope.apiURL + "drinks")
         .success(function(data) {
-          for (var i=0; i < data.length; i++)
-          {
-            data[i].name = data[i].no + " : " + data[i].name;
-          }
+          _proc(data);
           if (data) $scope.data = data;
         })
         .finally(function() {
+          $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         });
     }
@@ -169,15 +180,19 @@ angular.module('starter.controllers', [])
   $scope.displayScore = 0;
   $scope.voted = false;
 
-  $scope.highLight = function(num) {
+  $scope.highLight = function(num, type) {
     var cls = "not-scored";
-    if ($scope.displayScore >= num)
+    type = type || "my";
+    if (type == "my")
     {
-      if ($scope.voted)
+      if ($scope.displayScore >= num)
       {
         cls = "voted";
       }
-      else
+    }
+    else
+    {
+      if ($scope.data.avg >= num)
       {
         cls = "scored";
       }

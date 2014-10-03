@@ -12,6 +12,7 @@
         <input type="text" placeholder="filter" ng-model="filter.name">
       </label>
     </div>
+    <!--
     <ion-list>
       <ion-item class="item-icon-right" ng-repeat="d in data | filter:filter:strict" href="#/app/drink/{{ d._id }}">
         <div class="drinkName">{{ d.name }} ({{ d.abv }}%)</div>
@@ -27,5 +28,38 @@
         <div class="drinkBrewery">{{ d.breweryName }}</div>
       </ion-item>
     </ion-list>
+  -->
+
+  <div class="card" ng-repeat="d in data | filter:filter:strict" ng-click="viewDrink(d._id)">
+    <div class="item item-divider">
+      <div class="browse-name item-text-wrap">
+        {{ d.name }} ({{ d.abv }}%)
+      </div>
+      <div class="browse-score">
+        <i class="icon ion-checkmark" ng-class="(d.avg >= 1)?'scored':'not-scored'"></i>
+        <i class="icon ion-checkmark" ng-class="(d.avg >= 2)?'scored':'not-scored'"></i>
+        <i class="icon ion-checkmark" ng-class="(d.avg >= 3)?'scored':'not-scored'"></i>
+        <i class="icon ion-checkmark" ng-class="(d.avg >= 4)?'scored':'not-scored'"></i>
+        <i class="icon ion-checkmark" ng-class="(d.avg >= 5)?'scored':'not-scored'"></i>
+      </div>
+    </div>
+    <div class="item item-text-wrap">
+      {{ d.type }} at {{ d.abv }}%.<br />
+      {{ d.notes.substr(0, 100) }}{{ (d.notes.length > 100)?"...":"" }}
+    </div>
+    <div class="item item-divider" ng-show="d.my && d.my > 0">
+      <div class="browse-name">
+        Your rating:
+      </div>
+      <div class="browse-score">
+        <i class="icon ion-checkmark" ng-class="(d.my >= 1)?'voted':'not-scored'"></i>
+        <i class="icon ion-checkmark" ng-class="(d.my >= 2)?'voted':'not-scored'"></i>
+        <i class="icon ion-checkmark" ng-class="(d.my >= 3)?'voted':'not-scored'"></i>
+        <i class="icon ion-checkmark" ng-class="(d.my >= 4)?'voted':'not-scored'"></i>
+        <i class="icon ion-checkmark" ng-class="(d.my >= 5)?'voted':'not-scored'"></i>
+      </div>
+    </div>
+  </div>
+
   </ion-content>
 </ion-view>

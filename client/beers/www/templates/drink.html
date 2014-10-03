@@ -16,13 +16,33 @@
         <i class="icon ion-document-text"></i>
         {{ data.notes }}
       </div>
+        <div class="item" id="rating">
+          <div class=" browse-name">
+            Average rating:
+          </div>
+          <div class="browse-score">
+            <i class="icon ion-checkmark" score="1" ng-class="highLight(1, 'avg')"></i>
+            <i class="icon ion-checkmark" score="2" ng-class="highLight(2, 'avg')"></i>
+            <i class="icon ion-checkmark" score="3" ng-class="highLight(3, 'avg')"></i>
+            <i class="icon ion-checkmark" score="4" ng-class="highLight(4, 'avg')"></i>
+            <i class="icon ion-checkmark" score="5" ng-class="highLight(5, 'avg')"></i>
+          </div>
+        </div>
+
       <div class="item" id="rating">
-        <i class="icon ion-beer" score="1" ng-class="highLight(1)" ng-click="rate(1)"></i>
-        <i class="icon ion-beer" score="2" ng-class="highLight(2)" ng-click="rate(2)"></i>
-        <i class="icon ion-beer" score="3" ng-class="highLight(3)" ng-click="rate(3)"></i>
-        <i class="icon ion-beer" score="4" ng-class="highLight(4)" ng-click="rate(4)"></i>
-        <i class="icon ion-beer" score="5" ng-class="highLight(5)" ng-click="rate(5)"></i>
+
+        <div class=" browse-name">
+          Your rating:
+        </div>
+        <div class="browse-score">
+          <i class="icon ion-checkmark" score="1" ng-class="highLight(1)" ng-click="rate(1)"></i>
+          <i class="icon ion-checkmark" score="2" ng-class="highLight(2)" ng-click="rate(2)"></i>
+          <i class="icon ion-checkmark" score="3" ng-class="highLight(3)" ng-click="rate(3)"></i>
+          <i class="icon ion-checkmark" score="4" ng-class="highLight(4)" ng-click="rate(4)"></i>
+          <i class="icon ion-checkmark" score="5" ng-class="highLight(5)" ng-click="rate(5)"></i>
+        </div>
       </div>
+
 
       <div class="item item-divider">
         &nbsp;

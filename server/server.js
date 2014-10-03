@@ -35,6 +35,11 @@ function _sort(a,b) {
 	if (a[prop] < b[prop]) return 1;
 };
 
+function _processData(data, cb)
+{
+
+}
+
 // middleware to use for all requests
 router.use(function(req, res, next) {
 	// do logging
@@ -91,7 +96,7 @@ router.route('/drinks/my')
 				{
 					mine.push(data[i].drinkId);
 				}
-				Drink.find({ drinkId: { $in: mine }}, function(err, data) {
+				Drink.find({ _id: { $in: mine }}, function(err, data) {
 					res.json(data);
 				});
 			}
@@ -115,6 +120,7 @@ router.route('/drinks')
 		});
 
 	})
+
 	.get(function(req, res) {
 		Drink.find(function(err, data) {
 			if (err) {

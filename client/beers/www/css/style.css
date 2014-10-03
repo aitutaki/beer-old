@@ -38,12 +38,16 @@
   font-size: 32px;
 }
 
+.browse-name {
+  float: left;
+}
+
 .browse-score {
   float: right;
-  clear: both;
+  text-align: right;
 }
 
 .browse-score .icon {
-  font-size: 20px;
-  width: 24px;
+  font-size: 16px;
+  width: 18px;
 }

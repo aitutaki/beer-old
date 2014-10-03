@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($rootScope, $scope, $ionicModal, $timeout, $http, $ionicPlatform) {
-  $rootScope.apiURL = "http://178.62.27.239:8080/api/";
+  $rootScope.apiURL = "http://178.62.27.239:8080/api/"; // "http://localhost:8080/api/";
 
   // Form data for the login modal
   $scope.loginData = {};

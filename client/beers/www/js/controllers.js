@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($rootScope, $scope, $ionicModal, $timeout, $http, $ionicPlatform) {
-  $rootScope.apiURL = "http://178.62.27.239:8080/api/"; // "http://localhost:8080/api/";
+  $rootScope.apiURL =  "http://178.62.27.239:8080/api/"; // ;"http://localhost:8080/api/"; //
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -83,6 +83,10 @@ angular.module('starter.controllers', [])
     {
       $http.post($rootScope.apiURL + "drinks/query", $scope.query)
         .success(function(data) {
+          for (var i=0; i < data.length; i++)
+          {
+            data[i].name = data[i].no + " : " + data[i].name;
+          }
           if (data) $scope.data = data;
         })
         .finally(function() {
@@ -92,16 +96,48 @@ angular.module('starter.controllers', [])
     else if (!!$stateParams.top) {
       $http.get($rootScope.apiURL + "drinks/top")
         .success(function(data) {
+          for (var i=0; i < data.length; i++)
+          {
+            data[i].name = data[i].no + " : " + data[i].name;
+          }
           if (data) $scope.data = data;
         })
         .finally(function() {
           $scope.$broadcast('scroll.refreshComplete');
         });
     }
+    /*
+    else if (!!$stateParams.allType) {
+      var q = {};
+      if ($stateParams.allType == "beer")
+      {
+        q = { type: { $ne: "cider" } };
+      }
+      else
+      {
+        q = { type: "cider" };
+      }
+      $http.post($rootScope.apiURL + "drinks/query", q)
+        .success(function(data) {
+          for (var i=0; i < data.length; i++)
+          {
+            data[i].name = data[i].no + " : " + data[i].name;
+          }
+          if (data) $scope.data = data;
+        })
+        .finally(function() {
+          $scope.$broadcast('scroll.refreshComplete');
+        });
+    }
+    */
     else
     {
       $http.get($rootScope.apiURL + "drinks")
         .success(function(data) {
+          for (var i=0; i < data.length; i++)
+          {
+            data[i].name = data[i].no + " : " + data[i].name;
+          }
           if (data) $scope.data = data;
         })
         .finally(function() {

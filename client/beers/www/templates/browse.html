@@ -14,7 +14,7 @@
     </div>
     <ion-list>
       <ion-item class="item-icon-right" ng-repeat="d in data | filter:filter:strict" href="#/app/drink/{{ d._id }}">
-        <div class="drinkName">{{ d.no }} : {{ d.name }} ({{ d.abv }}%)</div>
+        <div class="drinkName">{{ d.name }} ({{ d.abv }}%)</div>
 
         <div class="browse-score">
           <i class="icon ion-beer" ng-class="(d.avg >= 5)?'scored':'not-scored'"></i>

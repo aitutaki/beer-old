@@ -64,9 +64,27 @@ router.route('/types')
 		});
 	});
 
+router.route('/drinks/top')
+	.get(function(req, res) {
+		console.log ("top drinks");
+		Drink.aggregate([
+				// First sort all the docs by name
+				{$sort: {avg: -1 }},
+				// Take the first 100 of those
+				{$limit: 10} //,
+				// Of those, take only ones where marks > 35
+				//{$match: {avg: {$gte: 0}}}
+		], function(err, data) {
+			console.log("ERROR: " + err);
+			console.log (data);
+			res.json(data);
+		});
+	});
+
 router.route('/drinks')
 	.post(function(req, res) {
 
+		console.log ("all drinks");
 		var drink = new Drink();
 		extend (drink, req.body);
 
@@ -84,22 +102,11 @@ router.route('/drinks')
 			if (err) {
 				res.send(err);
 			}
-			res.json(data);
-		});
-	});
-
-router.route('/drinks/top')
-	.get(function(req, res) {
-		Drink.aggregate([
-				// First sort all the docs by name
-				{$sort: {avg: -1, no: 1}},
-				// Take the first 100 of those
-				{$limit: 10} //,
-				// Of those, take only ones where marks > 35
-				//{$match: {avg: {$gte: 0}}}
-		], function(err, data) {
-			console.log("ERROR: " + err);
-			console.log (data);
+			if (data) {
+				data.sort(function(a,b) {
+					return (a.no - b.no);
+				});
+			}
 			res.json(data);
 		});
 	});

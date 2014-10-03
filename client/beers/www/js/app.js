@@ -57,6 +57,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
+
+    .state('app.alltype', {
+      url: "/browse/all/:allType",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/browse.html",
+          controller: 'BrowseCtrl'
+        }
+      }
+    })
     .state('app.type', {
       url: "/browse/type/:typeId",
       views: {

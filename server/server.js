@@ -52,6 +52,11 @@ router.get('/', function(req, res) {
 	res.json({ message: 'hooray! welcome to our api!' });
 });
 
+router.get('/apk', function(req, res) {
+var file = "beers-debug.apk";
+  res.download(file);
+})
+
 // more routes for our API will happen here
 router.route('/breweries')
 	.get(function(req, res) {

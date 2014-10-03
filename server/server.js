@@ -84,7 +84,6 @@ router.route('/drinks')
 			if (err) {
 				res.send(err);
 			}
-			data = data.sort(_sort);
 			res.json(data);
 		});
 	});
@@ -93,12 +92,13 @@ router.route('/drinks/top')
 	.get(function(req, res) {
 		Drink.aggregate([
 				// First sort all the docs by name
-				{$sort: {avg: 0}},
+				{$sort: {avg: 1}},
 				// Take the first 100 of those
 				{$limit: 10},
 				// Of those, take only ones where marks > 35
 				{$match: {avg: {$gte: 4}}}
 		], function(err, data) {
+			console.log("ERROR: " + err);
 			console.log (data);
 			res.json(data);
 		});
